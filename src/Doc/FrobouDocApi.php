@@ -5,7 +5,7 @@ namespace Frobou\Doc;
 class FrobouDocApi
 {
     private $classname;
-    private $output = null;
+    private $output = [];
 
     public function __construct($classname)
     {
@@ -16,15 +16,26 @@ class FrobouDocApi
     {
         $out = [];
         foreach ($data as $value) {
-            $out[trim(substr($value, 1, strpos($value, ' ')))] = trim(substr($value, strpos($value, ' ')));
+            $key = trim(substr($value, 1, strpos($value, ' ')));
+            if (!isset($out[$key])){
+                $out[$key] = [];
+            }
+            array_push($out[$key], trim(substr($value, strpos($value, ' '))));
         }
         if (key_exists('name', $out)) {
-            $this->output[$out['name']] = [];
+            $this->output[$out['name'][0]] = [];
+
             foreach ($out as $key => $value) {
                 if ($key == 'name') {
                     continue;
                 }
-                array_push($this->output[$out['name']], [$key => $value]);
+                foreach ($value as $val){
+                    $index = $out['name'][0];
+                    if (!isset($this->output[$index][$key])){
+                        $this->output[$index][$key] = [];
+                    }
+                    array_push($this->output[$index][$key], $val);
+                }
             }
         }
     }
@@ -41,7 +52,10 @@ class FrobouDocApi
             preg_match_all("/(@[\w]+ {1,}+[^\n]+)/m", $ref_meth->getDocComment(), $tags, PREG_PATTERN_ORDER);
             $this->arruma($tags[1]);
         }
-        return $this->output;
+        if (count($this->output) == 0){
+            return null;
+        }
+        return json_decode(json_encode($this->output, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
     }
 
 }

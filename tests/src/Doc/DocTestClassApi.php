@@ -14,9 +14,6 @@ class DocTestClassApi
      */
     private $prop1;
 
-    /**
-     * @name construtor
-     */
     public function __construct($prop1)
     {
         $this->prop1 = $prop1;
@@ -28,8 +25,9 @@ class DocTestClassApi
      * @method GET
      * @expected {"domain": "","description":"","aliases":"","mailboxes":"","maxquota":"","backupmx":"","active":"","default-aliases":""}
      * @field nome=o que o campo faz
-     * @field nome=o que o campo faz
+     * @field nome=o que o campo faz 2
      * @optfield nome=o que o campo faz
+     * @optfield nome=o que o campo faz2
      * @rule nome=como deve ser
      * @rule nome=como deve ser
      * @optrule nome=como deve ser
@@ -41,7 +39,7 @@ class DocTestClassApi
      * @return o retorno
      * @naosei (algum=valor, outro=valor)
      * nao pode
-     * @name um nome aqui
+     * @name umnomeaqui
      */
     public function func1($arg1, $arg2)
     {
