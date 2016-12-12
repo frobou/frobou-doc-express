@@ -55,7 +55,7 @@ class FrobouDocApi
         if (count($this->output) == 0){
             return null;
         }
-        return json_decode(json_encode($this->output, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        return $this->output;
     }
 
 }
