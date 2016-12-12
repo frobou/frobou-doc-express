@@ -7,11 +7,6 @@ class FrobouDocApi
     private $classname;
     private $output = [];
 
-    public function __construct($classname)
-    {
-        $this->classname = $classname;
-    }
-
     private function generateOutput($data)
     {
         $out = [];
@@ -40,12 +35,12 @@ class FrobouDocApi
         }
     }
 
-    public function getClassDoc()
+    public function getClassDoc($classname)
     {
-        $ref_class = new \ReflectionClass($this->classname);
+        $ref_class = new \ReflectionClass($classname);
         $mets = $ref_class->getMethods();
         foreach ($mets as $value) {
-            $ref_meth = new \ReflectionMethod($this->classname, $value->name);
+            $ref_meth = new \ReflectionMethod($classname, $value->name);
             if ($ref_meth->getDocComment() === false) {
                 continue;
             }
