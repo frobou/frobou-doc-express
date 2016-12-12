@@ -12,7 +12,7 @@ class FrobouDocApi
         $this->classname = $classname;
     }
 
-    private function arruma($data)
+    private function generateOutput($data)
     {
         $out = [];
         foreach ($data as $value) {
@@ -40,7 +40,7 @@ class FrobouDocApi
         }
     }
 
-    public function seila()
+    public function getClassDoc()
     {
         $ref_class = new \ReflectionClass($this->classname);
         $mets = $ref_class->getMethods();
@@ -50,7 +50,7 @@ class FrobouDocApi
                 continue;
             }
             preg_match_all("/(@[\w]+ {1,}+[^\n]+)/m", $ref_meth->getDocComment(), $tags, PREG_PATTERN_ORDER);
-            $this->arruma($tags[1]);
+            $this->generateOutput($tags[1]);
         }
         if (count($this->output) == 0){
             return null;

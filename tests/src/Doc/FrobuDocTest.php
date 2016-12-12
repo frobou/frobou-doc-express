@@ -9,32 +9,29 @@ require_once 'DocTestClassApi.php';
 class FrobuDocTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testSeiLa()
-    {
+    /**
+     * @dataProvider provider
+     */
+    public function testSeiLa($val,$field){
+
+        $this->assertEquals($val,$field);
+    }
+
+    public function provider(){
         $api = new FrobouDocApi(DocTestClassApi::class);
-        $obj = $api->seila();
-        $this->assertEquals('Adicionar um novo domínio de email',$obj->umnomeaqui->description[0]);
-        $this->assertEquals('nome=como deve ser',$obj->umnomeaqui->rule[0]);
+        $obj = $api->getClassDoc();
+        return [
+            ['Adicionar um novo domínio de email', $obj->umnomeaqui->description[0]],
+            ['nome=como deve ser', $obj->umnomeaqui->rule[0]],
+            ['o retorno', $obj->umnomeaqui->return[0]],
+            ['nome=como deve ser', $obj->umnomeaqui->optrule[0]]
+        ];
     }
 
     public function testSeiLaErrado()
     {
         $api = new FrobouDocApi(FrobouDocApi::class);
-        $this->assertNull($api->seila());
-    }
-
-    /**
-     * @dataProvider provider
-     */
-    public function testData($um, $dois){
-
-    }
-
-    public function provider(){
-        return [
-            ['um', 'dois'],
-            ['tres', 'quatro']
-        ];
+        $this->assertNull($api->getClassDoc());
     }
 
 }

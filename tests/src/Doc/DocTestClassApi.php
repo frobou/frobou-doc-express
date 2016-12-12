@@ -14,6 +14,11 @@ class DocTestClassApi
      */
     private $prop1;
 
+    /**
+     * DocTestClassApi constructor.
+     * @name prop1
+     * @telefone naot tem
+     */
     public function __construct($prop1)
     {
         $this->prop1 = $prop1;
@@ -32,8 +37,7 @@ class DocTestClassApi
      * @rule nome=como deve ser
      * @optrule nome=como deve ser
      * @obs alguma coisa relevante
-     * @example {"domain": "","description":"","aliases":"","mailboxes":"","maxquota":"","backupmx":"","active":"","default-aliases":"",
-     *  "domain": "","description":"","aliases":"","mailboxes":"","maxquota":"","backupmx":"","active":"","default-aliases":""}
+     * @example {"domain": "","description":"","aliases":"","mailboxes":"","maxquota":"","backupmx":"","active":"","default-aliases":"", "domain": "","description":"","aliases":"","mailboxes":"","maxquota":"","backupmx":"","active":"","default-aliases":""}
      * @example {"domain": "","description":"","aliases":"","mailboxes":"","maxquota":"","backupmx":"","active":"","default-aliases":""}
      * @return o retorno
      * @return o retorno
