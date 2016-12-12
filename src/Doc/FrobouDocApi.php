@@ -35,6 +35,10 @@ class FrobouDocApi
         }
     }
 
+    /**
+     * @param $classname (php 5.4 Frobou\Doc\FrobouDocApi, php 5.5+ FrobouDocApi::class)
+     * @return array|null
+     */
     public function getClassDoc($classname)
     {
         $ref_class = new \ReflectionClass($classname);
