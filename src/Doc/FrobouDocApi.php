@@ -41,6 +41,7 @@ class FrobouDocApi
      */
     public function getClassDoc($classname)
     {
+        $this->output = [];
         $ref_class = new \ReflectionClass($classname);
         $mets = $ref_class->getMethods();
         foreach ($mets as $value) {
