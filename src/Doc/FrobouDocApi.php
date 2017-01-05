@@ -17,15 +17,15 @@ class FrobouDocApi
             }
             array_push($out[$key], trim(substr($value, strpos($value, ' '))));
         }
-        if (key_exists('name', $out)) {
-            $this->output[$out['name'][0]] = [];
+        if (key_exists('endpoint', $out)) {
+            $this->output[$out['endpoint'][0]] = [];
 
             foreach ($out as $key => $value) {
-                if ($key == 'name') {
+                if ($key == 'endpoint') {
                     continue;
                 }
                 foreach ($value as $val){
-                    $index = $out['name'][0];
+                    $index = $out['endpoint'][0];
                     if (!isset($this->output[$index][$key])){
                         $this->output[$index][$key] = [];
                     }
