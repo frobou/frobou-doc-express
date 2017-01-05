@@ -18,8 +18,8 @@ class FrobuDocTest extends \PHPUnit_Framework_TestCase
     }
 
     public function provider(){
-        $api = new FrobouDocApi(DocTestClassApi::class);
-        $obj = $api->getClassDoc();
+        $api = new FrobouDocApi();
+        $obj = $api->getClassDoc(DocTestClassApi::class);
         return [
             ['Adicionar um novo domínio de email', $obj->umnomeaqui->description[0]],
             ['nome=como deve ser', $obj->umnomeaqui->rule[0]],
@@ -30,8 +30,8 @@ class FrobuDocTest extends \PHPUnit_Framework_TestCase
 
     public function testSeiLaErrado()
     {
-        $api = new FrobouDocApi(FrobouDocApi::class);
-        $this->assertNull($api->getClassDoc());
+        $api = new FrobouDocApi();
+        $this->assertNull($api->getClassDoc(FrobouDocApi::class));
     }
 
 }

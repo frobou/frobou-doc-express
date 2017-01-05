@@ -15,6 +15,7 @@ class DocTestClassApi
     private $prop1;
 
     /**
+     * @endpoint true
      * DocTestClassApi constructor.
      * @name prop1
      * @telefone naot tem
@@ -25,6 +26,7 @@ class DocTestClassApi
     }
 
     /**
+     * @endpoint true
      * @description Adicionar um novo domínio de email
      * @nada   dsadf
      * @method GET

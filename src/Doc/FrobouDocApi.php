@@ -12,21 +12,20 @@ class FrobouDocApi
         $out = [];
         foreach ($data as $value) {
             $key = trim(substr($value, 1, strpos($value, ' ')));
-            if (!isset($out[$key])){
+            if (!isset($out[$key])) {
                 $out[$key] = [];
             }
             array_push($out[$key], trim(substr($value, strpos($value, ' '))));
         }
-        if (key_exists('endpoint', $out)) {
-            $this->output[$out['endpoint'][0]] = [];
-
+        if (key_exists('endpoint', $out) && key_exists('name', $out)) {
+            $this->output[$out['name'][0]] = [];
             foreach ($out as $key => $value) {
-                if ($key == 'endpoint') {
+                if ($key == 'name' || $key == 'endpoint') {
                     continue;
                 }
-                foreach ($value as $val){
-                    $index = $out['endpoint'][0];
-                    if (!isset($this->output[$index][$key])){
+                foreach ($value as $val) {
+                    $index = $out['name'][0];
+                    if (!isset($this->output[$index][$key])) {
                         $this->output[$index][$key] = [];
                     }
                     array_push($this->output[$index][$key], $val);
@@ -52,12 +51,17 @@ class FrobouDocApi
             preg_match_all("/(@[\w]+ {1,}+[^\n]+)/m", $ref_meth->getDocComment(), $tags, PREG_PATTERN_ORDER);
             $this->generateOutput($tags[1]);
         }
-        if (count($this->output) == 0){
+        if (count($this->output) == 0) {
             return null;
         }
-        return $this->output;
+        $result = new \stdClass();
+        foreach ($this->output as $key => $value) {
+            foreach ($value as $k => $v) {
+                $result->$key->$k = $v;
+            }
+        }
+        return $result;
     }
-
 }
 
 //        var_dump($ref_class->getDocComment());die;
