@@ -3,8 +3,9 @@
 namespace Frobou\Test;
 
 /**
- * Class DocTestClassApi
- * @package Frobou\Test
+ * @entrypoint
+ * @entrypoint
+ * @name    DocTestClassApi
  */
 
 class DocTestClassApi
@@ -15,10 +16,10 @@ class DocTestClassApi
     private $prop1;
 
     /**
-     * @endpoint true
+     * @endpoint
      * DocTestClassApi constructor.
      * @name prop1
-     * @telefone naot tem
+     * @telefone  naot   tem nada
      */
     public function __construct($prop1)
     {
@@ -26,7 +27,7 @@ class DocTestClassApi
     }
 
     /**
-     * @endpoint true
+     * @endpoint
      * @description Adicionar um novo domínio de email
      * @nada   dsadf
      * @method GET
