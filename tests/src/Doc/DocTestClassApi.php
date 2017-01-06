@@ -16,7 +16,7 @@ class DocTestClassApi
     private $prop1;
 
     /**
-     * @endpoint
+     * @endpoint false
      * DocTestClassApi constructor.
      * @name prop1
      * @telefone  naot   tem nada
@@ -41,6 +41,10 @@ class DocTestClassApi
      * @obs Para que o recurso funcione é necessário que use o PHP
      * @example {"arg1": "Carroça","arg2":5,"arg3":true}
      * @return {"A carroça foi 5 vezes para pinda"}
+     * @teste esse trem tem mais de
+     uma linha
+     e outra,
+     e outra...
      */
     public function func1($arg1, $arg2, $arg3=false)
     {

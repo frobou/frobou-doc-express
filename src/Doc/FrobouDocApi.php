@@ -80,7 +80,7 @@ class FrobouDocApi
             $result[$entry][$point] = [];
 
             //agora é que eu quero ver....
-            preg_match_all("/(@[\w]+ {1,}+[^\n]+)/m", $ref_meth->getDocComment(), $tags, PREG_PATTERN_ORDER);
+            preg_match_all("/(@[\w]+ {1,}+[^\*]+)/m", $ref_meth->getDocComment(), $tags, PREG_PATTERN_ORDER);
             foreach ($tags[1] as $value) {
                 if (strpos($value, '@name ') !== false) {
                     continue;
@@ -90,7 +90,7 @@ class FrobouDocApi
                 if (!isset($result[$entry][$point][$name])) {
                     $result[$entry][$point][$name] = [];
                 }
-                array_push($result[$entry][$point][$name], $val[1]);
+                array_push($result[$entry][$point][$name], trim($val[1]));
             }
         }
         return $result;

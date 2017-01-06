@@ -20,7 +20,6 @@ class FrobuDocTest extends \PHPUnit_Framework_TestCase
     public function provider(){
         $api = new FrobouDocApi();
         $obj = $api->getClassDoc(DocTestClassApi::class);
-        var_dump($obj);die;
         return [
             ['Manda a carroça para algum lugar', $obj['DocTestClassApi']['umnomeaqui']['description'][0]],
             ['$arg1=deve ser uma string', $obj['DocTestClassApi']['umnomeaqui']['rule'][0]],
