@@ -28,29 +28,27 @@ class DocTestClassApi
 
     /**
      * @endpoint
-     * @description Adicionar um novo domínio de email
-     * @nada   dsadf
-     * @method GET
-     * @expected {"domain": "","description":"","aliases":"","mailboxes":"","maxquota":"","backupmx":"","active":"","default-aliases":""}
-     * @field nome=o que o campo faz
-     * @field nome=o que o campo faz 2
-     * @optfield nome=o que o campo faz
-     * @optfield nome=o que o campo faz2
-     * @rule nome=como deve ser
-     * @rule nome=como deve ser
-     * @optrule nome=como deve ser
-     * @obs alguma coisa relevante
-     * @example {"domain": "","description":"","aliases":"","mailboxes":"","maxquota":"","backupmx":"","active":"","default-aliases":"", "domain": "","description":"","aliases":"","mailboxes":"","maxquota":"","backupmx":"","active":"","default-aliases":""}
-     * @example {"domain": "","description":"","aliases":"","mailboxes":"","maxquota":"","backupmx":"","active":"","default-aliases":""}
-     * @return o retorno
-     * @return o retorno
-     * @naosei (algum=valor, outro=valor)
-     * nao pode
      * @name umnomeaqui
+     * @description Manda a carroça para algum lugar
+     * @method GET
+     * @expected {"arg1": "","arg2":"","arg3":""}
+     * @field $arg1=decricao do campo
+     * @field $arg2=descricao do campo
+     * @optfield $arg3=descricao do campo
+     * @rule $arg1=deve ser uma string
+     * @rule $arg2=deve ser um inteito de 0 a 10
+     * @optrule nome=true para pinda, false para monhangaba
+     * @obs Para que o recurso funcione é necessário que use o PHP
+     * @example {"arg1": "Carroça","arg2":5,"arg3":true}
+     * @return {"A carroça foi 5 vezes para pinda"}
      */
-    public function func1($arg1, $arg2)
+    public function func1($arg1, $arg2, $arg3=false)
     {
-        return $arg1 + $arg2;
+        $vou = 'pinda';
+        if ($arg3){
+            $vou = 'monhangaba';
+        }
+        return json_encode("A {$arg1} foi {$arg2} vez(es) para {$vou}");
     }
 
 }

@@ -4,65 +4,101 @@ namespace Frobou\Doc;
 
 class FrobouDocApi
 {
-    private $classname;
-    private $output = [];
 
-    private function generateOutput($data)
+    private function getEntryPoint($ref)
     {
-        $out = [];
-        foreach ($data as $value) {
-            $key = trim(substr($value, 1, strpos($value, ' ')));
-            if (!isset($out[$key])) {
-                $out[$key] = [];
-            }
-            array_push($out[$key], trim(substr($value, strpos($value, ' '))));
+        preg_match_all("/(@[\w]+ {0,})+[\n]+/m", $ref->getDocComment(), $tag_class, PREG_PATTERN_ORDER);
+        $entrypoint = array_unique($tag_class[1]);
+        if (!in_array('@entrypoint', $entrypoint)) {
+            //se nao for, pula tudo
+            return null;
         }
-        if (key_exists('endpoint', $out) && key_exists('name', $out)) {
-            $this->output[$out['name'][0]] = [];
-            foreach ($out as $key => $value) {
-                if ($key == 'name' || $key == 'endpoint') {
-                    continue;
-                }
-                foreach ($value as $val) {
-                    $index = $out['name'][0];
-                    if (!isset($this->output[$index][$key])) {
-                        $this->output[$index][$key] = [];
-                    }
-                    array_push($this->output[$index][$key], $val);
-                }
+        //define o nome do entrypoint
+        preg_match_all("/(@[\w]+ {1,}+[^\n]+)/m", $ref->getDocComment(), $tag_name, PREG_PATTERN_ORDER);
+        $n = array_unique($tag_name[1]);
+        foreach ($n as $value) {
+            if (strpos($value, '@name ') !== false) {
+                $entry_name = trim(str_replace('@name ', '', $value));
+                break;
             }
         }
+        if (!isset($entry_name)) {
+            //se nao for, pula tudo
+            return null;
+        }
+        return $entry_name;
     }
 
-    /**
-     * @param $classname (php 5.4 Frobou\Doc\FrobouDocApi, php 5.5+ FrobouDocApi::class)
-     * @return array|null
-     */
+    private function getEndPoint($ref)
+    {
+        //define se o metodo é elgivel ou nao
+        preg_match_all("/(@[\w]+ {0,})+[\n]+/m", $ref->getDocComment(), $tag_method, PREG_PATTERN_ORDER);
+        $endpoint = array_unique($tag_method[1]);
+        if (!in_array('@endpoint', $endpoint)) {
+            //se nao for, pula tudo
+            return null;
+        }
+        //define o nome do entrypoint
+        preg_match_all("/(@[\w]+ {1,}+[^\n]+)/m", $ref->getDocComment(), $meth_tag_name, PREG_PATTERN_ORDER);
+        $n = array_unique($meth_tag_name[1]);
+        foreach ($n as $value) {
+            if (strpos($value, '@name ') !== false) {
+                $point_name = trim(str_replace('@name ', '', $value));
+                break;
+            }
+        }
+        if (!isset($point_name)) {
+            //se nao for, pula tudo
+            return null;
+        }
+        return $point_name;
+    }
+
     public function getClassDoc($classname)
     {
-        $this->output = [];
         $ref_class = new \ReflectionClass($classname);
+        //define se a classe é elgivel ou nao
+        $entry = $this->getEntryPoint($ref_class);
+        if (is_null($entry)) {
+            return null;
+        }
+        $result[$entry] = [];
+
+
+        //hora de colocar os endpoints
+        //pega os metodos anotados
         $mets = $ref_class->getMethods();
         foreach ($mets as $value) {
             $ref_meth = new \ReflectionMethod($classname, $value->name);
             if ($ref_meth->getDocComment() === false) {
                 continue;
             }
+            $point = $this->getEndPoint($ref_meth);
+            if (is_null($point)) {
+                continue;
+            }
+            $result[$entry][$point] = [];
+
+            //agora é que eu quero ver....
             preg_match_all("/(@[\w]+ {1,}+[^\n]+)/m", $ref_meth->getDocComment(), $tags, PREG_PATTERN_ORDER);
-            $this->generateOutput($tags[1]);
-        }
-        if (count($this->output) == 0) {
-            return null;
-        }
-        $result = new \stdClass();
-        foreach ($this->output as $key => $value) {
-            foreach ($value as $k => $v) {
-                $result->$key->$k = $v;
+            foreach ($tags[1] as $value) {
+                if (strpos($value, '@name ') !== false) {
+                    continue;
+                }
+                $val = explode(' ', $value, 2);
+                $name = str_replace('@', '', trim($val[0]));
+                if (!isset($result[$entry][$point][$name])) {
+                    $result[$entry][$point][$name] = [];
+                }
+                array_push($result[$entry][$point][$name], $val[1]);
             }
         }
         return $result;
+
     }
 }
+
+
 
 //        var_dump($ref_class->getDocComment());die;
 //        var_dump($ref_class->getProperties());die;
