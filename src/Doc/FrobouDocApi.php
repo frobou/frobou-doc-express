@@ -4,7 +4,17 @@ namespace Frobou\Doc;
 
 class FrobouDocApi
 {
+//        var_dump($ref_class->getDocComment());die;
+//        var_dump($ref_class->getProperties());die;
 
+//        $ref_prop = new \ReflectionProperty($this->classname, 'prop1');
+//        $ref_meth = new \ReflectionMethod($this->classname, 'func1');
+//        var_dump($ref_prop->getDocComment());die;
+
+    /**
+     * @param $ref
+     * @return null|string
+     */
     private function getEntryPoint($ref)
     {
         preg_match_all("/(@[\w]+ {0,})+[\n]+/m", $ref->getDocComment(), $tag_class, PREG_PATTERN_ORDER);
@@ -29,6 +39,10 @@ class FrobouDocApi
         return $entry_name;
     }
 
+    /**
+     * @param $ref
+     * @return null|string
+     */
     private function getEndPoint($ref)
     {
         //define se o metodo é elgivel ou nao
@@ -97,12 +111,3 @@ class FrobouDocApi
 
     }
 }
-
-
-
-//        var_dump($ref_class->getDocComment());die;
-//        var_dump($ref_class->getProperties());die;
-
-//        $ref_prop = new \ReflectionProperty($this->classname, 'prop1');
-//        $ref_meth = new \ReflectionMethod($this->classname, 'func1');
-//        var_dump($ref_prop->getDocComment());die;

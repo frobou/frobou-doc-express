@@ -1,4 +1,5 @@
 ## Frobou Doc Go, by frobou ##
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/f820acf8-7d51-45ad-8edd-bfb4c47f6284/small.png)](https://insight.sensiolabs.com/projects/f820acf8-7d51-45ad-8edd-bfb4c47f6284)  
 
 --- readme mal e porcamente escrito, nao é o foco agora...
 
